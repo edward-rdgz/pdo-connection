@@ -1,0 +1,20 @@
+# OPCIONES
+Options +FollowSymLinks
+# INDICES PRIMARIOS
+Options -Indexes 
+DirectoryIndex index.php index.html 
+# ACTIVACION DE LA RESCRITURA
+RewriteEngine on
+# BASE DE RESCRITURA
+RewriteBase / 
+# CONDICION PARA NEGAR DIRECTORIOS
+RewriteCond %{SCRIPT_FILENAME} !-d
+# CONDICION PARA NEGAR ARCHIVOS
+RewriteCond %{SCRIPT_FILENAME} !-f
+# EVITAR USO DE LAS IMAGENES DESDE OTRO SERVIDOR
+RewriteCond %{HTTP_REFERER} !^http://(.+\.)?website\.com.mx/ [NC]
+RewriteCond %{HTTP_REFERER} !^$
+# ARCHIVOS NO PERMITIDOS DESDE OTRO SERVIDOR
+RewriteRule .*\.(jpg|gif|bmp|png)$ http://hotlink.website.com.mx/no_hotlinking.png [L]
+# RESCRITURA DE VARIABLES DE LA URL 
+RewriteRule ^([A-Za-z0-9-_]+)/?$ ./?pag=$1 [NC,L]
